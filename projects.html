@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Portfolio Projects - Showcasing all projects and repositories"
+    />
+    <meta name="author" content="İsim Soyisim" />
+    <meta
+      name="keywords"
+      content="portfolio projects, web development projects, github repositories, react projects, node.js projects, full stack projects"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/apple-touch-icon.png"
+    />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourwebsite.com/projects.html" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yourwebsite.com/projects.html" />
+    <meta property="og:title" content="Portfolio - Projeler" />
+    <meta
+      property="og:description"
+      content="Tüm projelerim ve GitHub repository'lerim"
+    />
+    <meta
+      property="og:image"
+      content="https://yourwebsite.com/assets/og-image.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://yourwebsite.com/projects.html"
+    />
+    <meta property="twitter:title" content="Portfolio - Projeler" />
+    <meta
+      property="twitter:description"
+      content="Tüm projelerim ve GitHub repository'lerim"
+    />
+    <meta
+      property="twitter:image"
+      content="https://yourwebsite.com/assets/og-image.jpg"
+    />
+
+    <title>Portfolio - Projeler</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Portfolio Projects",
+        "description": "Showcasing all web development projects and repositories",
+        "url": "https://yourwebsite.com/projects.html",
+        "author": {
+          "@type": "Person",
+          "name": "İsim Soyisim",
+          "jobTitle": "Full Stack Developer"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Ana içeriğe geç</a>
+
+    <header class="header">
+      <nav class="navbar">
+        <div class="container">
+          <div class="nav-brand">
+            <a href="index.html">Portfolio</a>
+          </div>
+          <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li><a href="projects.html" class="active">Projeler</a></li>
+            <li><a href="contact.html">İletişim</a></li>
+          </ul>
+          <button
+            class="nav-toggle"
+            id="navToggle"
+            aria-label="Toggle navigation"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section class="projects-hero">
+        <div class="container">
+          <h1 class="page-title">Projelerim</h1>
+          <p class="page-subtitle">
+            Geliştirdiğim projeler ve kullandığım teknolojiler
+          </p>
+        </div>
+      </section>
+
+      <section class="projects-section">
+        <div class="container">
+          <div class="projects-grid" id="projectsGrid">
+            <div class="project-card-large">
+              <div class="project-image">
+                <div
+                  class="image-placeholder"
+                  role="img"
+                  aria-label="Proje görseli"
+                >
+                  Proje Görseli
+                </div>
+                <!-- Gerçek görsel eklendiğinde şu şekilde kullanın:
+                <img src="assets/projects/project.jpg" alt="Proje başlığı ve açıklaması" loading="lazy" />
+                -->
+              </div>
+              <div class="project-info">
+                <h3>E-Ticaret Platformu</h3>
+                <p>
+                  Modern bir e-ticaret platformu. React ve Node.js kullanılarak
+                  geliştirilmiştir. Kullanıcı kimlik doğrulama, ödeme
+                  entegrasyonu ve admin paneli özellikleri içerir.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">React</span>
+                  <span class="tech-tag">Node.js</span>
+                  <span class="tech-tag">MongoDB</span>
+                  <span class="tech-tag">Stripe API</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://demo.example.com"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Canlı Demo</a
+                  >
+                  <a
+                    href="https://github.com/username/ecommerce"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >GitHub Repo</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card-large">
+              <div class="project-image">
+                <div
+                  class="image-placeholder"
+                  role="img"
+                  aria-label="Proje görseli"
+                >
+                  Proje Görseli
+                </div>
+                <!-- Gerçek görsel eklendiğinde şu şekilde kullanın:
+                <img src="assets/projects/project.jpg" alt="Proje başlığı ve açıklaması" loading="lazy" />
+                -->
+              </div>
+              <div class="project-info">
+                <h3>Task Management App</h3>
+                <p>
+                  Takım çalışması için tasarlanmış görev yönetim uygulaması.
+                  Real-time güncellemeler, drag-and-drop özelliği ve detaylı
+                  raporlama içerir.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">Vue.js</span>
+                  <span class="tech-tag">Express</span>
+                  <span class="tech-tag">Socket.io</span>
+                  <span class="tech-tag">PostgreSQL</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://demo.example.com"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Canlı Demo</a
+                  >
+                  <a
+                    href="https://github.com/username/taskmanager"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >GitHub Repo</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card-large">
+              <div class="project-image">
+                <div
+                  class="image-placeholder"
+                  role="img"
+                  aria-label="Proje görseli"
+                >
+                  Proje Görseli
+                </div>
+                <!-- Gerçek görsel eklendiğinde şu şekilde kullanın:
+                <img src="assets/projects/project.jpg" alt="Proje başlığı ve açıklaması" loading="lazy" />
+                -->
+              </div>
+              <div class="project-info">
+                <h3>Weather Dashboard</h3>
+                <p>
+                  Hava durumu verilerini görselleştiren interaktif dashboard.
+                  Çoklu şehir desteği, haftalık tahminler ve detaylı
+                  meteorolojik veriler sunar.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">JavaScript</span>
+                  <span class="tech-tag">Chart.js</span>
+                  <span class="tech-tag">OpenWeather API</span>
+                  <span class="tech-tag">CSS3</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://demo.example.com"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Canlı Demo</a
+                  >
+                  <a
+                    href="https://github.com/username/weather-dashboard"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >GitHub Repo</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card-large">
+              <div class="project-image">
+                <div
+                  class="image-placeholder"
+                  role="img"
+                  aria-label="Proje görseli"
+                >
+                  Proje Görseli
+                </div>
+                <!-- Gerçek görsel eklendiğinde şu şekilde kullanın:
+                <img src="assets/projects/project.jpg" alt="Proje başlığı ve açıklaması" loading="lazy" />
+                -->
+              </div>
+              <div class="project-info">
+                <h3>Blog Platform</h3>
+                <p>
+                  Markdown desteği olan modern blog platformu. SEO
+                  optimizasyonu, kategori yönetimi ve yorum sistemi özellikleri
+                  içerir.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">Next.js</span>
+                  <span class="tech-tag">MDX</span>
+                  <span class="tech-tag">Prisma</span>
+                  <span class="tech-tag">Vercel</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://demo.example.com"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Canlı Demo</a
+                  >
+                  <a
+                    href="https://github.com/username/blog-platform"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >GitHub Repo</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card-large">
+              <div class="project-image">
+                <div
+                  class="image-placeholder"
+                  role="img"
+                  aria-label="Proje görseli"
+                >
+                  Proje Görseli
+                </div>
+                <!-- Gerçek görsel eklendiğinde şu şekilde kullanın:
+                <img src="assets/projects/project.jpg" alt="Proje başlığı ve açıklaması" loading="lazy" />
+                -->
+              </div>
+              <div class="project-info">
+                <h3>Portfolio Website</h3>
+                <p>
+                  Responsive ve performans odaklı portfolio websitesi. Modern
+                  CSS teknikleri, smooth animations ve accessibility
+                  standartlarına uygun tasarım.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">HTML5</span>
+                  <span class="tech-tag">CSS3</span>
+                  <span class="tech-tag">JavaScript</span>
+                  <span class="tech-tag">GitHub Pages</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://demo.example.com"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Canlı Demo</a
+                  >
+                  <a
+                    href="https://github.com/username/portfolio"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >GitHub Repo</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="project-card-large">
+              <div class="project-image">
+                <div
+                  class="image-placeholder"
+                  role="img"
+                  aria-label="Proje görseli"
+                >
+                  Proje Görseli
+                </div>
+                <!-- Gerçek görsel eklendiğinde şu şekilde kullanın:
+                <img src="assets/projects/project.jpg" alt="Proje başlığı ve açıklaması" loading="lazy" />
+                -->
+              </div>
+              <div class="project-info">
+                <h3>API Gateway</h3>
+                <p>
+                  Mikroservis mimarisi için API gateway çözümü. Rate limiting,
+                  authentication ve request routing özellikleri içerir.
+                </p>
+                <div class="project-tech">
+                  <span class="tech-tag">Node.js</span>
+                  <span class="tech-tag">Express</span>
+                  <span class="tech-tag">Redis</span>
+                  <span class="tech-tag">Docker</span>
+                </div>
+                <div class="project-links">
+                  <a
+                    href="https://demo.example.com"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Canlı Demo</a
+                  >
+                  <a
+                    href="https://github.com/username/api-gateway"
+                    class="project-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >GitHub Repo</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <p>&copy; 2024 Portfolio. Tüm hakları saklıdır.</p>
+          <div class="social-links">
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              >GitHub</a
+            >
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              >LinkedIn</a
+            >
+            <a href="mailto:email@example.com" aria-label="Email">Email</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

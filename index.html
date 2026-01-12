@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Personal Portfolio Website - Showcasing projects and skills"
+    />
+    <meta name="author" content="İsim Soyisim" />
+    <meta
+      name="keywords"
+      content="portfolio, web developer, full stack developer, projects, cv, frontend developer, backend developer, UI/UX designer"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/apple-touch-icon.png"
+    />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourwebsite.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yourwebsite.com/" />
+    <meta property="og:title" content="Portfolio - İsim Soyisim" />
+    <meta
+      property="og:description"
+      content="Full Stack Developer & UI/UX Designer Portfolio"
+    />
+    <meta
+      property="og:image"
+      content="https://yourwebsite.com/assets/og-image.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://yourwebsite.com/" />
+    <meta property="twitter:title" content="Portfolio - İsim Soyisim" />
+    <meta
+      property="twitter:description"
+      content="Full Stack Developer Portfolio"
+    />
+    <meta
+      property="twitter:image"
+      content="https://yourwebsite.com/assets/og-image.jpg"
+    />
+
+    <title>Portfolio - Ana Sayfa</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "İsim Soyisim",
+        "jobTitle": "Full Stack Developer",
+        "url": "https://yourwebsite.com",
+        "sameAs": [
+          "https://github.com/username",
+          "https://linkedin.com/in/username"
+        ],
+        "email": "email@example.com",
+        "knowsAbout": [
+          "Web Development",
+          "JavaScript",
+          "React",
+          "Node.js",
+          "UI/UX Design"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Ana içeriğe geç</a>
+
+    <header class="header">
+      <nav class="navbar">
+        <div class="container">
+          <div class="nav-brand">
+            <a href="index.html">Portfolio</a>
+          </div>
+          <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html" class="active">Ana Sayfa</a></li>
+            <li><a href="projects.html">Projeler</a></li>
+            <li><a href="contact.html">İletişim</a></li>
+          </ul>
+          <button
+            class="nav-toggle"
+            id="navToggle"
+            aria-label="Toggle navigation"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <h1 class="hero-title">
+              Merhaba, Ben <span class="highlight">İsim Soyisim</span>
+            </h1>
+            <p class="hero-subtitle">Full Stack Developer & UI/UX Designer</p>
+            <p class="hero-description">
+              Modern web teknolojileri ile kullanıcı odaklı çözümler geliştiren,
+              performans ve erişilebilirlik konularında tutkulu bir yazılım
+              geliştiricisiyim.
+            </p>
+            <div class="hero-cta">
+              <a href="assets/cv.pdf" class="btn btn-primary" download
+                >CV İndir</a
+              >
+              <a href="contact.html" class="btn btn-secondary">İletişime Geç</a>
+            </div>
+          </div>
+          <div class="hero-image">
+            <div
+              class="profile-placeholder"
+              role="img"
+              aria-label="İsim Soyisim - Full Stack Developer profil fotoğrafı"
+            >
+              <span>Profil Fotoğrafı</span>
+            </div>
+            <!-- Gerçek görsel eklendiğinde şu şekilde kullanın:
+            <img src="assets/profile.jpg" alt="İsim Soyisim - Full Stack Developer" loading="lazy" />
+            -->
+          </div>
+        </div>
+      </section>
+
+      <section class="about">
+        <div class="container">
+          <h2 class="section-title">Hakkımda</h2>
+          <div class="about-content">
+            <div class="about-text">
+              <p>
+                Yazılım geliştirme alanında 5+ yıllık deneyime sahibim. Frontend
+                ve backend teknolojilerinde uzmanlaşmış, modern framework'ler ve
+                best practice'ler konusunda güncel kalmaya özen gösteriyorum.
+              </p>
+              <p>
+                Projelerimde kullanıcı deneyimini ön planda tutar, temiz kod
+                yazma prensiplerine uyar ve sürekli öğrenmeye açık bir yaklaşım
+                sergilerim.
+              </p>
+            </div>
+            <div class="skills">
+              <h3>Teknolojiler</h3>
+              <div class="skills-grid">
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">Responsive Design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="featured-projects">
+        <div class="container">
+          <h2 class="section-title">Öne Çıkan Projeler</h2>
+          <div class="projects-preview">
+            <div class="project-card">
+              <div class="project-image">
+                <div
+                  class="image-placeholder"
+                  role="img"
+                  aria-label="Proje görseli"
+                >
+                  Proje Görseli
+                </div>
+                <!-- Gerçek görsel eklendiğinde şu şekilde kullanın:
+                <img src="assets/projects/project1.jpg" alt="Proje Başlığı 1 - Modern web teknolojileri ile geliştirilmiş proje" loading="lazy" />
+                -->
+              </div>
+              <div class="project-info">
+                <h3>Proje Başlığı 1</h3>
+                <p>
+                  Bu proje modern web teknolojileri kullanılarak
+                  geliştirilmiştir.
+                </p>
+                <div class="project-links">
+                  <a href="#" class="project-link" target="_blank">Demo</a>
+                  <a href="#" class="project-link" target="_blank">GitHub</a>
+                </div>
+              </div>
+            </div>
+            <div class="project-card">
+              <div class="project-image">
+                <div
+                  class="image-placeholder"
+                  role="img"
+                  aria-label="Proje görseli"
+                >
+                  Proje Görseli
+                </div>
+                <!-- Gerçek görsel eklendiğinde şu şekilde kullanın:
+                <img src="assets/projects/project2.jpg" alt="Proje Başlığı 2 - Kullanıcı dostu arayüz ve yüksek performans odaklı uygulama" loading="lazy" />
+                -->
+              </div>
+              <div class="project-info">
+                <h3>Proje Başlığı 2</h3>
+                <p>
+                  Kullanıcı dostu arayüz ve yüksek performans odaklı bir
+                  uygulama.
+                </p>
+                <div class="project-links">
+                  <a href="#" class="project-link" target="_blank">Demo</a>
+                  <a href="#" class="project-link" target="_blank">GitHub</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="section-cta">
+            <a href="projects.html" class="btn btn-outline"
+              >Tüm Projeleri Gör</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <p>&copy; 2024 Portfolio. Tüm hakları saklıdır.</p>
+          <div class="social-links">
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              >GitHub</a
+            >
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              >LinkedIn</a
+            >
+            <a href="mailto:email@example.com" aria-label="Email">Email</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
