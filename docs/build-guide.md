@@ -1,10 +1,10 @@
 # Personal Portfolio Website — Step-by-Step Build Guide
 
-> **Archived: original build playbook.** Bu doküman, projeyi sıfırdan inşa ederken kullanılan orijinal yol haritasıdır. Kod tabanı bu rehber yazıldıktan sonra gelişmiş olabilir; güncel kurulum, mimari ve dağıtım notları için [../README.md](../README.md) dosyasına bakın.
+> **Archived: original build playbook.** This document is the original roadmap used to build the project from scratch. The codebase may have evolved since this guide was written; for up-to-date setup, architecture, and deployment notes, see [../README.md](../README.md).
 
 ---
 
-> **Project Summary:** Modern, responsive ve performans odaklı bir kişisel portfolyo şablonu. Üç sayfadan oluşur (`index.html`, `projects.html`, `contact.html`); hero/hakkımda/öne çıkan projeler, proje listesi ve iletişim formu içerir. Tamamen istemci tarafında çalışır; backend, build aracı veya çerçeve bağımlılığı yoktur. SEO (Open Graph, Twitter Card, JSON-LD, `sitemap.xml`, `robots.txt`) ve erişilebilirlik (skip link, ARIA, semantik HTML, görünür focus, klavye navigasyonu) ilk sınıf vatandaştır. İletişim formu `mailto` fallback ile çalışır, opsiyonel olarak Formspree veya EmailJS'e bağlanabilir.
+> **Project Summary:** A modern, responsive, performance-focused personal portfolio template. It consists of three pages (`index.html`, `projects.html`, `contact.html`) and includes hero/about/featured projects, a project list, and a contact form. It runs entirely on the client side; there is no backend, build tool, or framework dependency. SEO (Open Graph, Twitter Card, JSON-LD, `sitemap.xml`, `robots.txt`) and accessibility (skip link, ARIA, semantic HTML, visible focus, keyboard navigation) are first-class citizens. The contact form works with a `mailto` fallback and can optionally connect to Formspree or EmailJS.
 
 Each step below is a self-contained prompt. Execute them in order.
 
@@ -55,18 +55,18 @@ Stack: HTML5, CSS3 (Custom Properties, Grid, Flexbox), Vanilla JavaScript (ES6+)
 
 ## Global Build Rules (apply to EVERY step)
 
-- **No git operations.** `git` komutları çalıştırma; versiyon kontrolü kullanıcı tarafından elle yönetilir.
-- Onaylanmamış paket ekleme; mümkün olduğunca native tarayıcı API'lerini kullan.
-- İstenmedikçe uzun süreli süreçler (watcher, server) başlatma.
-- Her adım kendi içinde bağımsızdır; bir adımı uygularken sadece o adımın dosyalarına dokun.
-- Kod temiz, okunabilir; değişken/fonksiyon isimleri İngilizce ve camelCase olmalı.
-- Güvenlik, erişilebilirlik ve performans her adımda gözetilir; DRY ilkesine uy.
+- **No git operations.** Do not run `git` commands; version control is managed manually by the user.
+- Do not add unapproved packages; use native browser APIs as much as possible.
+- Do not start long-running processes (watchers, servers) unless requested.
+- Each step is independent; when implementing a step, only touch that step's files.
+- Code must be clean and readable; variable/function names must be in English and camelCase.
+- Security, accessibility, and performance are considered at every step; follow the DRY principle.
 
 ---
 
 ## Architecture at a Glance
 
-Statik bir site olduğu için "mimari" tarayıcıda yüklenen varlıkların ilişkisidir. Sunucu tarafı mantık yoktur; iletişim formu harici servislere (opsiyonel) veya kullanıcının e-posta istemcisine yönlenir.
+Because this is a static site, the "architecture" is the relationship between the assets loaded in the browser. There is no server-side logic; the contact form is routed to external services (optional) or the user's email client.
 
 ```mermaid
 flowchart LR
@@ -81,7 +81,7 @@ flowchart LR
     Crawler([Search Engine]) --> SEO
 ```
 
-Tüm sayfalar aynı `styles.css` ve `script.js` dosyalarını paylaşır. `script.js` her sayfada güvenli çalışacak şekilde defansif yazılır (elementler `null` olabilir).
+All pages share the same `styles.css` and `script.js` files. `script.js` is written defensively so that it runs safely on every page (elements may be `null`).
 
 ---
 
@@ -91,7 +91,7 @@ Tüm sayfalar aynı `styles.css` ve `script.js` dosyalarını paylaşır. `scrip
 
 ## STEP 1 — Project Scaffolding & File Structure
 
-**Goal:** Bağımlılıksız, doğrudan tarayıcıda açılabilen statik proje iskeletini kur.
+**Goal:** Set up the dependency-free static project skeleton that opens directly in the browser.
 
 **Files/folders to create:**
 
@@ -105,33 +105,33 @@ Tüm sayfalar aynı `styles.css` ve `script.js` dosyalarını paylaşır. `scrip
 ├── sitemap.xml
 ├── robots.txt
 ├── .gitignore
-└── assets/            # profil görseli, proje görselleri, cv.pdf, favicon
+└── assets/            # profile image, project images, cv.pdf, favicon
 ```
 
 **Implementation notes:**
 
-- Build aracı veya `package.json` yok; site dosyaları tarayıcıya olduğu gibi servis edilir.
-- Geliştirme için statik bir sunucu yeterlidir: `python -m http.server 8000` veya VS Code Live Server.
-- `assets/` klasörü görseller, CV ve favicon için ayrılır; şablon, görsel yoksa CSS placeholder kullanır.
+- No build tool or `package.json`; the site files are served to the browser as-is.
+- A static server is enough for development: `python -m http.server 8000` or VS Code Live Server.
+- The `assets/` folder is reserved for images, the CV, and the favicon; the template uses CSS placeholders when no image is present.
 
-**Acceptance:** `index.html` tarayıcıda boş da olsa hatasız açılıyor; konsol temiz.
+**Acceptance:** `index.html` opens in the browser without errors even when empty; the console is clean.
 
 ---
 
 ## STEP 2 — CSS Reset, Design Tokens & Base Styles
 
-**Goal:** Tutarlı bir tasarım temeli için reset, CSS değişkenleri ve tipografi tanımla.
+**Goal:** Define a reset, CSS variables, and typography for a consistent design foundation.
 
 **Files to edit:** `styles.css`
 
 **Implementation notes:**
 
-- Evrensel reset: `* { margin:0; padding:0; box-sizing:border-box; }`.
-- Tüm renk, gölge ve geçişleri `:root` altında CSS custom properties olarak tanımla (bkz. Appendix A). Markaya göre tek noktadan özelleştirme sağlar (DRY).
-- `html { scroll-behavior: smooth; }` ve sistem font yığını ile hızlı, FOUT'suz tipografi.
-- `.container` ile maksimum genişlik (1200px) ve yatay padding standardize edilir.
+- Universal reset: `* { margin:0; padding:0; box-sizing:border-box; }`.
+- Define all colors, shadows, and transitions as CSS custom properties under `:root` (see Appendix A). This enables single-point, brand-based customization (DRY).
+- `html { scroll-behavior: smooth; }` and a system font stack for fast, FOUT-free typography.
+- `.container` standardizes the max width (1200px) and horizontal padding.
 
-**Acceptance:** Renkler/spacing değişkenlerden geliyor; sabit (hard-coded) renk tekrarı yok.
+**Acceptance:** Colors/spacing come from variables; there is no repeated hard-coded color.
 
 ---
 
@@ -141,36 +141,36 @@ Tüm sayfalar aynı `styles.css` ve `script.js` dosyalarını paylaşır. `scrip
 
 ## STEP 3 — Header & Responsive Navigation
 
-**Goal:** Üç sayfada paylaşılan sticky header ve mobil hamburger menüyü oluştur.
+**Goal:** Build the sticky header and mobile hamburger menu shared across the three pages.
 
-**Files to edit:** her HTML dosyasının `<header>` bloğu, `styles.css`
+**Files to edit:** the `<header>` block of each HTML file, `styles.css`
 
 **Implementation notes:**
 
-- `.header` sticky + `z-index` ile içerik üstünde kalır.
-- `.nav-menu` masaüstünde flex; `max-width: 768px` altında off-canvas panel olur, `.nav-toggle` görünür hale gelir.
-- `.nav-toggle` üç `<span>` çizgisi `.active` durumunda X'e dönüşür.
-- Aktif sayfa linkine `class="active"` ver (alt çizgi göstergesi `::after` ile).
+- `.header` stays above the content with sticky + `z-index`.
+- `.nav-menu` is flex on desktop; below `max-width: 768px` it becomes an off-canvas panel and `.nav-toggle` becomes visible.
+- The three `<span>` lines of `.nav-toggle` turn into an X in the `.active` state.
+- Give the active page link `class="active"` (underline indicator via `::after`).
 
-**A11y:** `.nav-toggle` `aria-label="Toggle navigation"` taşır; tüm linkler görünür `:focus` outline'a sahiptir.
+**A11y:** `.nav-toggle` carries `aria-label="Toggle navigation"`; all links have a visible `:focus` outline.
 
-**Acceptance:** Menü 768px altında hamburger'e dönüşüyor; klavye ile gezilebiliyor.
+**Acceptance:** The menu turns into a hamburger below 768px; it is keyboard-navigable.
 
 ---
 
 ## STEP 4 — Footer & Global Section Primitives
 
-**Goal:** Ortak footer ve yeniden kullanılabilir bölüm/başlık/buton sınıflarını tanımla.
+**Goal:** Define the shared footer and reusable section/heading/button classes.
 
-**Files to edit:** her HTML `<footer>`, `styles.css`
+**Files to edit:** each HTML `<footer>`, `styles.css`
 
 **Implementation notes:**
 
-- `.footer` koyu zemin + sosyal linkler; `.footer-content` flex ve mobilde dikey yığılır.
-- Yeniden kullanılabilir primitive'ler: `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-outline`, `.section-title`, `.page-title`, `.page-subtitle`.
-- Butonlarda `:hover` ve `:focus` durumları zorunlu (a11y + UX).
+- `.footer` dark background + social links; `.footer-content` is flex and stacks vertically on mobile.
+- Reusable primitives: `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-outline`, `.section-title`, `.page-title`, `.page-subtitle`.
+- `:hover` and `:focus` states are mandatory on buttons (a11y + UX).
 
-**Acceptance:** Buton ve başlık stilleri tek tanımdan tüm sayfalarda tutarlı.
+**Acceptance:** Button and heading styles are consistent across all pages from a single definition.
 
 ---
 
@@ -180,52 +180,52 @@ Tüm sayfalar aynı `styles.css` ve `script.js` dosyalarını paylaşır. `scrip
 
 ## STEP 5 — Home Page (`index.html`)
 
-**Goal:** Hero, Hakkımda ve Öne Çıkan Projeler bölümlerini kur.
+**Goal:** Build the Hero, About, and Featured Projects sections.
 
 **Files to edit:** `index.html`, `styles.css`
 
 **Implementation notes:**
 
-- Hero: iki kolonlu grid (metin + dairesel profil placeholder), CTA butonları (CV indir, İletişim).
-- About: metin + `.skills-grid` (teknoloji etiketleri).
-- Featured projects: `.projects-preview` içinde 2 `.project-card`, "Tüm Projeleri Gör" CTA'sı.
-- Görseller eklenene kadar `.profile-placeholder` ve `.image-placeholder` gradient kutular kullanılır; gerçek `<img>` için `loading="lazy"` örneği yorum olarak bırakılır.
+- Hero: two-column grid (text + circular profile placeholder), CTA buttons (Download CV, Contact).
+- About: text + `.skills-grid` (technology tags).
+- Featured projects: 2 `.project-card` items inside `.projects-preview`, with a "View All Projects" CTA.
+- Until images are added, `.profile-placeholder` and `.image-placeholder` gradient boxes are used; the real `<img>` example with `loading="lazy"` is left as a comment.
 
-**Acceptance:** Hero 968px altında tek kolona düşüyor; placeholder'lar düzgün görünüyor.
+**Acceptance:** The hero collapses to a single column below 968px; placeholders look correct.
 
 ---
 
 ## STEP 6 — Projects Page (`projects.html`)
 
-**Goal:** Tüm projeleri detaylı kartlarla listele.
+**Goal:** List all projects with detailed cards.
 
 **Files to edit:** `projects.html`, `styles.css`
 
 **Implementation notes:**
 
-- `.projects-grid` dikey yığın; her öğe `.project-card-large` (görsel + bilgi grid'i).
-- Her kart: başlık, açıklama, `.project-tech` etiketleri, `.project-links` (Demo + GitHub).
-- Harici linkler `target="_blank" rel="noopener noreferrer"` taşır (güvenlik).
-- 968px altında kart tek kolona düşer.
+- `.projects-grid` is a vertical stack; each item is `.project-card-large` (image + info grid).
+- Each card: title, description, `.project-tech` tags, `.project-links` (Demo + GitHub).
+- External links carry `target="_blank" rel="noopener noreferrer"` (security).
+- Cards collapse to a single column below 968px.
 
-**Acceptance:** Kartlar responsive; tüm dış linkler `rel="noopener noreferrer"` içeriyor.
+**Acceptance:** Cards are responsive; all external links contain `rel="noopener noreferrer"`.
 
 ---
 
 ## STEP 7 — Contact Page (`contact.html`)
 
-**Goal:** İletişim bilgileri + erişilebilir iletişim formu oluştur.
+**Goal:** Build the contact information + an accessible contact form.
 
 **Files to edit:** `contact.html`, `styles.css`
 
 **Implementation notes:**
 
-- İki kolon: `.contact-info` (email, LinkedIn, GitHub, konum) ve `.contact-form-wrapper`.
-- Form alanları: `name`, `email`, `subject`, `message`; her birinde `<label for>` + `required`.
-- `#formMessage` kutusu başarı/hata mesajları için (`.success` / `.error` sınıfları).
-- Input `:focus` durumunda görünür outline + box-shadow.
+- Two columns: `.contact-info` (email, LinkedIn, GitHub, location) and `.contact-form-wrapper`.
+- Form fields: `name`, `email`, `subject`, `message`; each with a `<label for>` + `required`.
+- The `#formMessage` box is for success/error messages (`.success` / `.error` classes).
+- Inputs get a visible outline + box-shadow on `:focus`.
 
-**Acceptance:** Her input'un bağlı bir label'ı var; form 968px altında tek kolon.
+**Acceptance:** Every input has an associated label; the form is a single column below 968px.
 
 ---
 
@@ -235,32 +235,32 @@ Tüm sayfalar aynı `styles.css` ve `script.js` dosyalarını paylaşır. `scrip
 
 ## STEP 8 — Navigation Toggle & Active Link
 
-**Goal:** Mobil menü aç/kapa ve mevcut sayfa linkini vurgula.
+**Goal:** Toggle the mobile menu and highlight the current page link.
 
 **Files to edit:** `script.js`
 
 **Implementation notes:**
 
-- `navToggle` tıklamasında `navMenu` ve `navToggle` üzerinde `.active` toggle et.
-- Bir linke tıklanınca menüyü kapat (mobil UX).
-- `window.location.pathname` ile mevcut sayfayı bul, eşleşen linke `.active` ekle.
-- Elementler yoksa kod sessizce atlamalı (`if (navToggle && navMenu)`).
+- On `navToggle` click, toggle `.active` on `navMenu` and `navToggle`.
+- Close the menu when a link is clicked (mobile UX).
+- Find the current page with `window.location.pathname` and add `.active` to the matching link.
+- If the elements don't exist, the code should silently skip (`if (navToggle && navMenu)`).
 
-**Acceptance:** Menü mobilde açılıp link tıklanınca kapanıyor; aktif link doğru.
+**Acceptance:** The menu opens on mobile and closes when a link is clicked; the active link is correct.
 
 ---
 
 ## STEP 9 — Smooth Scroll & Skip-Link Focus (a11y)
 
-**Goal:** Anchor linklerde yumuşak kaydırma; skip-link'in ekran okuyucularla çalışması.
+**Goal:** Smooth scrolling on anchor links; making the skip link work with screen readers.
 
 **Files to edit:** `script.js`
 
 **Implementation notes:**
 
-- `a[href^="#"]` linkleri için: `href === '#'` olanları (placeholder demo/GitHub butonları) atla, böylece sayfa başa zıplamaz.
-- Hedef bulunamazsa `preventDefault` yapma; varsayılan davranışı koru.
-- Kaydırmadan sonra hedefe klavye odağını taşı (`tabindex="-1"` + `focus({ preventScroll: true })`), böylece "Ana içeriğe geç" skip-link gerçekten çalışır.
+- For `a[href^="#"]` links: skip those that are `href === '#'` (placeholder demo/GitHub buttons) so the page doesn't jump to the top.
+- If the target is not found, do not call `preventDefault`; preserve the default behavior.
+- After scrolling, move keyboard focus to the target (`tabindex="-1"` + `focus({ preventScroll: true })`) so the "Skip to main content" link actually works.
 
 ```javascript
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -277,40 +277,40 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 ```
 
-**Acceptance:** Skip-link odağı `#main-content`'e taşıyor; `href="#"` butonları sayfayı zıplatmıyor.
+**Acceptance:** The skip link moves focus to `#main-content`; `href="#"` buttons don't make the page jump.
 
 ---
 
 ## STEP 10 — Contact Form Handling & Validation
 
-**Goal:** İstemci tarafı doğrulama + gönderim stratejisi.
+**Goal:** Client-side validation + submission strategy.
 
 **Files to edit:** `script.js`
 
 **Implementation notes:**
 
-- `submit` olayında `preventDefault`; `FormData` ile alanları oku.
-- Boş alan ve regex ile email doğrulaması; hata durumunda `#formMessage` göster.
-- Gönderim için üç seçenek: Formspree (`fetch`), EmailJS, veya varsayılan `mailto` fallback.
-- `showFormMessage(message, type)` yardımcı fonksiyonu mesaj kutusunu yönetir (DRY).
+- On the `submit` event, call `preventDefault`; read the fields with `FormData`.
+- Validate empty fields and the email via regex; on error, show `#formMessage`.
+- Three options for submission: Formspree (`fetch`), EmailJS, or the default `mailto` fallback.
+- The `showFormMessage(message, type)` helper function manages the message box (DRY).
 
-**Security:** Kullanıcı girdisi `encodeURIComponent` ile `mailto` linkine kaçışlanır; hassas anahtarlar istemciye gömülmemeli.
+**Security:** User input is escaped into the `mailto` link with `encodeURIComponent`; sensitive keys must not be embedded in the client.
 
-**Acceptance:** Geçersiz email hata mesajı veriyor; geçerli gönderim seçilen kanala yönleniyor.
+**Acceptance:** An invalid email shows an error message; a valid submission is routed to the selected channel.
 
 ---
 
 ## STEP 11 — Scroll Animations & Scroll-to-Top
 
-**Goal:** Fade-in animasyonları ve yukarı çık butonu.
+**Goal:** Fade-in animations and a scroll-to-top button.
 
 **Files to edit:** `script.js`, `styles.css`
 
 **Implementation notes:**
 
-- `IntersectionObserver` ile `.project-card`, `.project-card-large`, `.about-content`, `.contact-wrapper` öğelerini görünürlükte fade-in yap.
-- Scroll-to-top butonu JS ile oluşturulur ama **stilleri `styles.css`'te** `.scroll-to-top` ve `.scroll-to-top.visible` sınıflarında tutulur (inline style yok — DRY/temiz kod).
-- Scroll dinleyicisi `debounce` ile throttle edilir (performans).
+- Use `IntersectionObserver` to fade in `.project-card`, `.project-card-large`, `.about-content`, and `.contact-wrapper` elements as they become visible.
+- The scroll-to-top button is created with JS, but its **styles are kept in `styles.css`** in the `.scroll-to-top` and `.scroll-to-top.visible` classes (no inline styles — DRY/clean code).
+- The scroll listener is throttled with `debounce` (performance).
 
 ```javascript
 const handleScroll = debounce(() => {
@@ -318,7 +318,7 @@ const handleScroll = debounce(() => {
 }, 100);
 ```
 
-**Acceptance:** 300px sonrası buton görünüyor; scroll performansı akıcı.
+**Acceptance:** The button appears after 300px; scroll performance is smooth.
 
 ---
 
@@ -328,70 +328,70 @@ const handleScroll = debounce(() => {
 
 ## STEP 12 — SEO Metadata & Structured Data
 
-**Goal:** Her sayfaya tam SEO meta seti ve JSON-LD ekle.
+**Goal:** Add a full SEO meta set and JSON-LD to each page.
 
-**Files to edit:** üç HTML dosyasının `<head>` bloğu
+**Files to edit:** the `<head>` block of the three HTML files
 
 **Implementation notes:**
 
 - `description`, `keywords`, `author`, canonical link.
-- Open Graph (`og:*`) ve Twitter Card (`twitter:*`) etiketleri.
-- JSON-LD: ana sayfada `Person`, projelerde `CollectionPage`, iletişimde `ContactPage`.
-- Yayına almadan önce `yourwebsite.com`, `İsim Soyisim`, `email@example.com` placeholder'larını gerçek değerlerle değiştir.
+- Open Graph (`og:*`) and Twitter Card (`twitter:*`) tags.
+- JSON-LD: `Person` on the home page, `CollectionPage` on projects, `ContactPage` on contact.
+- Before going live, replace the `yourwebsite.com`, `Your Name`, and `email@example.com` placeholders with real values.
 
-**Acceptance:** Her sayfada geçerli JSON-LD ve canonical URL var.
+**Acceptance:** Each page has valid JSON-LD and a canonical URL.
 
 ---
 
 ## STEP 13 — `sitemap.xml` & `robots.txt`
 
-**Goal:** Arama motoru taraması için sitemap ve robots dosyaları.
+**Goal:** Sitemap and robots files for search engine crawling.
 
 **Files to edit:** `sitemap.xml`, `robots.txt`
 
 **Implementation notes:**
 
-- `sitemap.xml`: üç URL, `lastmod`, `changefreq`, `priority`.
-- `robots.txt`: tüm botlara izin + sitemap referansı.
-- Domain placeholder'larını gerçek alan adıyla güncelle.
+- `sitemap.xml`: three URLs, `lastmod`, `changefreq`, `priority`.
+- `robots.txt`: allow all bots + a sitemap reference.
+- Update the domain placeholders with the real domain.
 
-**Acceptance:** `sitemap.xml` geçerli XML; `robots.txt` sitemap'e işaret ediyor.
+**Acceptance:** `sitemap.xml` is valid XML; `robots.txt` points to the sitemap.
 
 ---
 
 ## STEP 14 — Accessibility & Performance Pass
 
-**Goal:** WCAG uyumu ve hız iyileştirmeleri.
+**Goal:** WCAG compliance and speed improvements.
 
 **Implementation notes:**
 
-- Skip link (`.skip-link`) `:focus` ile görünür olur, ilk odaklanabilir öğedir.
-- Tüm interaktif öğelerde görünür `:focus`; görseller için `alt` ve `loading="lazy"`.
-- Renk kontrastını WCAG 2.1 AA seviyesinde doğrula.
-- Gereksiz reflow'ları önlemek için animasyonlar `opacity`/`transform` üzerinden.
+- The skip link (`.skip-link`) becomes visible on `:focus` and is the first focusable element.
+- Visible `:focus` on all interactive elements; `alt` and `loading="lazy"` for images.
+- Verify color contrast at the WCAG 2.1 AA level.
+- Use `opacity`/`transform` for animations to avoid unnecessary reflows.
 
-**Acceptance:** Klavye-only navigasyon tüm akışı kapsıyor; Lighthouse a11y skoru yüksek.
+**Acceptance:** Keyboard-only navigation covers the entire flow; the Lighthouse a11y score is high.
 
 ---
 
 ## STEP 15 — Deployment (GitHub Pages / Netlify / Vercel)
 
-**Goal:** Statik siteyi yayına al.
+**Goal:** Publish the static site.
 
 **Implementation notes:**
 
 - **GitHub Pages:** repo Settings > Pages > `main` branch root.
-- **Netlify:** "New site from Git", build command boş, publish dir `/`.
+- **Netlify:** "New site from Git", empty build command, publish dir `/`.
 - **Vercel:** "New Project", framework preset "Other".
-- Build adımı yok; dosyalar olduğu gibi servis edilir.
+- No build step; the files are served as-is.
 
-**Acceptance:** Üç sayfa da canlı ortamda 200 dönüyor; varlıklar (CSS/JS) yükleniyor.
+**Acceptance:** All three pages return 200 in the live environment; assets (CSS/JS) load.
 
 ---
 
 # Appendix A — Design Tokens (CSS Variables)
 
-`:root` altında tek kaynaktan yönetilen tasarım değişkenleri:
+Design variables managed from a single source under `:root`:
 
 ```css
 :root {
@@ -415,32 +415,32 @@ const handleScroll = debounce(() => {
 
 # Appendix B — Responsive Breakpoints
 
-| Breakpoint        | Hedef                                        |
-| ----------------- | -------------------------------------------- |
-| `max-width: 968px` | Hero/about/proje/iletişim grid'leri tek kolon |
-| `max-width: 768px` | Hamburger menü, off-canvas nav, başlık ölçek |
-| `max-width: 480px` | Container padding, buton ölçek, footer dikey |
+| Breakpoint          | Target                                              |
+| ------------------- | --------------------------------------------------- |
+| `max-width: 968px`  | Hero/about/projects/contact grids collapse to one column |
+| `max-width: 768px`  | Hamburger menu, off-canvas nav, heading scale       |
+| `max-width: 480px`  | Container padding, button scale, vertical footer    |
 
 ---
 
 # Appendix C — Common Pitfalls
 
-- **Skip-link odağı:** Sadece `scrollIntoView` yetmez; `focus()` çağrılmazsa ekran okuyucu kullanıcıları için skip-link işe yaramaz.
-- **`href="#"` butonları:** Genel `a[href^="#"]` smooth-scroll handler'ı `preventDefault` ile sayfayı başa zıplatabilir; bare `#` linkleri atlanmalı.
-- **Inline style:** Scroll-to-top gibi JS ile oluşturulan öğelerin stilini JS içine gömme; CSS sınıfı kullan (DRY, sürdürülebilirlik).
-- **Placeholder içerik:** Şablon `yourwebsite.com`, `İsim Soyisim`, `email@example.com` gibi değerler içerir; yayına almadan önce değiştir.
-- **Eksik `assets/`:** `cv.pdf`, favicon, OG görseli referansları dosya yoksa 404 verir.
-- **Harici linkler:** `target="_blank"` her zaman `rel="noopener noreferrer"` ile birlikte kullanılmalı.
+- **Skip-link focus:** `scrollIntoView` alone is not enough; without calling `focus()`, the skip link does not work for screen reader users.
+- **`href="#"` buttons:** The generic `a[href^="#"]` smooth-scroll handler can make the page jump to the top via `preventDefault`; bare `#` links must be skipped.
+- **Inline styles:** Don't embed the style of JS-created elements like scroll-to-top inside JS; use a CSS class (DRY, maintainability).
+- **Placeholder content:** The template contains values like `yourwebsite.com`, `Your Name`, and `email@example.com`; replace them before going live.
+- **Missing `assets/`:** References to `cv.pdf`, the favicon, and the OG image return 404 if the files don't exist.
+- **External links:** `target="_blank"` must always be used together with `rel="noopener noreferrer"`.
 
 ---
 
 # Appendix D — Pre-flight Checklist
 
-- [ ] Tüm placeholder metin/URL/email gerçek değerlerle değiştirildi
-- [ ] `assets/` içindeki görseller, favicon ve `cv.pdf` mevcut
-- [ ] JSON-LD, OG ve Twitter meta etiketleri her sayfada doğru
-- [ ] `sitemap.xml` ve `robots.txt` gerçek domain'i gösteriyor
-- [ ] Klavye-only navigasyon ve skip-link çalışıyor
-- [ ] Tüm dış linkler `rel="noopener noreferrer"` taşıyor
-- [ ] Mobil (≤768px) menü ve responsive grid'ler doğrulandı
-- [ ] Konsol hatasız; Lighthouse SEO/A11y/Performance skorları yeşil
+- [ ] All placeholder text/URLs/emails replaced with real values
+- [ ] Images, favicon, and `cv.pdf` present in `assets/`
+- [ ] JSON-LD, OG, and Twitter meta tags correct on every page
+- [ ] `sitemap.xml` and `robots.txt` point to the real domain
+- [ ] Keyboard-only navigation and the skip link work
+- [ ] All external links carry `rel="noopener noreferrer"`
+- [ ] Mobile (≤768px) menu and responsive grids verified
+- [ ] Console is error-free; Lighthouse SEO/A11y/Performance scores are green

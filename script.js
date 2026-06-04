@@ -65,14 +65,14 @@ if (contactForm) {
 
         // Validate form
         if (!data.name || !data.email || !data.subject || !data.message) {
-            showFormMessage('Lütfen tüm alanları doldurun.', 'error');
+            showFormMessage('Please fill in all fields.', 'error');
             return;
         }
 
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(data.email)) {
-            showFormMessage('Lütfen geçerli bir email adresi girin.', 'error');
+            showFormMessage('Please enter a valid email address.', 'error');
             return;
         }
 
@@ -89,24 +89,24 @@ if (contactForm) {
             // Option 2: Using EmailJS (uncomment and configure)
             // emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', data)
             //     .then(() => {
-            //         showFormMessage('Mesajınız başarıyla gönderildi!', 'success');
+            //         showFormMessage('Your message was sent successfully!', 'success');
             //         contactForm.reset();
             //     })
             //     .catch(() => {
-            //         showFormMessage('Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+            //         showFormMessage('Something went wrong. Please try again.', 'error');
             //     });
 
             // Option 3: Using mailto (fallback)
-            const mailtoLink = `mailto:email@example.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(`İsim: ${data.name}\nEmail: ${data.email}\n\nMesaj:\n${data.message}`)}`;
+            const mailtoLink = `mailto:email@example.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`)}`;
             window.location.href = mailtoLink;
             
             // Show success message
-            showFormMessage('Email uygulamanız açılıyor. Mesajınızı gönderebilirsiniz.', 'success');
+            showFormMessage('Your email app is opening. You can send your message.', 'success');
             contactForm.reset();
             
         } catch (error) {
             console.error('Form submission error:', error);
-            showFormMessage('Bir hata oluştu. Lütfen tekrar deneyin veya doğrudan email gönderin.', 'error');
+            showFormMessage('Something went wrong. Please try again or email directly.', 'error');
         }
     });
 }
