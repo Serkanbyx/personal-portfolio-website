@@ -34,8 +34,8 @@ A modern, responsive, and performance-optimized personal portfolio website. Show
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Serkanbyx/portfolio-website.git
-cd portfolio-website
+git clone https://github.com/Serkanbyx/personal-portfolio-website.git
+cd personal-portfolio-website
 ```
 
 2. Open the project in your preferred code editor (VS Code recommended)
@@ -232,7 +232,7 @@ const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
 1. Push your repository to GitHub
 2. Go to Settings > Pages
 3. Select `main` branch as source
-4. Your site will be available at `https://username.github.io/portfolio-website`
+4. Your site will be available at `https://username.github.io/personal-portfolio-website`
 
 ### Netlify
 
@@ -299,7 +299,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 For questions, suggestions, or issues:
 
-- Open an issue on [GitHub](https://github.com/Serkanbyx/portfolio-website/issues)
+- Open an issue on [GitHub](https://github.com/Serkanbyx/personal-portfolio-website/issues)
 - Email: serkanbyx1@gmail.com
 - Website: [serkanbayraktar.com](https://serkanbayraktar.com/)
 

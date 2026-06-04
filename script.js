@@ -21,14 +21,24 @@ if (navToggle && navMenu) {
 // Smooth Scroll for Anchor Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+        const href = this.getAttribute('href');
+
+        // Ignore bare "#" links (e.g. placeholder demo/GitHub buttons)
+        if (href === '#') {
+            return;
         }
+
+        const target = document.querySelector(href);
+        if (!target) {
+            return;
+        }
+
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Move keyboard focus to the target so skip links work for screen readers
+        target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
     });
 });
 
@@ -184,41 +194,17 @@ function createScrollToTopButton() {
     scrollToTopBtn.innerHTML = '↑';
     scrollToTopBtn.className = 'scroll-to-top';
     scrollToTopBtn.setAttribute('aria-label', 'Scroll to top');
-    scrollToTopBtn.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: var(--primary-color);
-        color: white;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 1000;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    `;
-    
+
     scrollToTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-    
+
     document.body.appendChild(scrollToTopBtn);
-    
+
     const handleScroll = debounce(() => {
-        if (window.pageYOffset > 300) {
-            scrollToTopBtn.style.opacity = '1';
-            scrollToTopBtn.style.visibility = 'visible';
-        } else {
-            scrollToTopBtn.style.opacity = '0';
-            scrollToTopBtn.style.visibility = 'hidden';
-        }
+        scrollToTopBtn.classList.toggle('visible', window.pageYOffset > 300);
     }, 100);
-    
+
     window.addEventListener('scroll', handleScroll);
 }
 
